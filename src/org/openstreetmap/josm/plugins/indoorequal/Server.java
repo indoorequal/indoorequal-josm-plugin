@@ -14,9 +14,6 @@ public class Server extends Thread {
         serverSocket = new ServerSocket(port);
     }
 
-    /**
-     * @throws IOException
-     */
     private void start_() throws IOException {
         while (true) {
             Socket socket = serverSocket.accept();
@@ -26,7 +23,8 @@ public class Server extends Thread {
             request.start();
         }
     }
-	
+
+    @Override
     public void run() {
         try {
             this.start_();
