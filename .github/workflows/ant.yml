@@ -1,0 +1,15 @@
+name: Java CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        josm-revision: ["", "r18303"]
+    uses: JOSM/JOSMPluginAction/workflows/ant.yml@v1
+    with:
+      josm-revision: ${{ matrix.josm-revision }}
