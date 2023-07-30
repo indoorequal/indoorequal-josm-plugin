@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<project name="openindoor" default="dist" basedir=".">
+<project name="indoorequal" default="dist" basedir=".">
 
     <!-- enter the SVN commit message -->
     <property name="commit.message" value="Commit message"/>
     <!-- enter the *lowest* JOSM version this plugin is currently compatible with -->
     <property name="plugin.main.version" value="18303"/>
 
-    <property name="plugin.author" value="OpenIndoor"/>
-    <property name="plugin.class" value="org.openstreetmap.josm.plugins.openindoor.OIDPlugin"/>
-    <property name="plugin.description" value="Allows to view OpenIndoor rendering in a web browser"/>
+    <property name="plugin.author" value="indoor="/>
+    <property name="plugin.class" value="org.openstreetmap.josm.plugins.indoorequal.IndoorEqualPlugin"/>
+    <property name="plugin.description" value="Allows to preview your indoor edit into indoor="/>
     <property name="plugin.icon" value="images/dialogs/openindoor.png"/>
-    <property name="plugin.link" value="https://wiki.openstreetmap.org/wiki/OpenIndoor"/>
+    <property name="plugin.link" value="https://wiki.openstreetmap.org/wiki/indoor="/>
 
     <import file="../build-common.xml"/>
 
