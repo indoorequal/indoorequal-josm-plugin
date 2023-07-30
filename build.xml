@@ -10,8 +10,8 @@
     <property name="plugin.author" value="indoor="/>
     <property name="plugin.class" value="org.openstreetmap.josm.plugins.indoorequal.IndoorEqualPlugin"/>
     <property name="plugin.description" value="Allows to preview your indoor edit into indoor="/>
-    <property name="plugin.icon" value="images/dialogs/openindoor.png"/>
-    <property name="plugin.link" value="https://wiki.openstreetmap.org/wiki/indoor="/>
+    <property name="plugin.icon" value="images/indoorequal.png"/>
+    <property name="plugin.link" value="https://github.com/indoorequal/indoorequal-josm-plugin"/>
 
     <import file="../build-common.xml"/>
 
