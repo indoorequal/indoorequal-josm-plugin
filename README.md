@@ -1,6 +1,8 @@
 # indoor= JOSM plugin
 
-This plugin lets you visualize your JOSM indoor data into [indoor=][]
+This plugin lets you visualize your JOSM indoor data into [indoor=][]. It adds a menu entry in the "More tools" entry and. On click it open the the current layer on [indoor=][] as a preview.
+
+![Indoor= JOSM plugin with a menu entry in the more menu](./indoorequal-josm-plugin.png)
 
 ## Install
 
