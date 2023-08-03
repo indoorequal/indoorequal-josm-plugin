@@ -7,9 +7,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 
 import java.io.File;
-import java.util.ServiceConfigurationError;
 import java.io.IOException;
-import java.net.SocketTimeoutException;
 import org.openstreetmap.josm.actions.JosmAction;
 import org.openstreetmap.josm.gui.MainApplication;
 import org.openstreetmap.josm.gui.layer.Layer;
@@ -51,11 +49,7 @@ public class Action extends JosmAction {
                 if (result != null) {
                     Logging.warn(result);
                 }
-            } catch(SocketTimeoutException e) {
-                Logging.error(e);
             } catch (IOException e) {
-                Logging.error(e);
-            } catch (ServiceConfigurationError e) {
                 Logging.error(e);
             }
         }
