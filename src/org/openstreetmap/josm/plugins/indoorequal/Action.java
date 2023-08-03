@@ -21,7 +21,7 @@ import org.openstreetmap.josm.tools.Logging;
 public class Action extends JosmAction {
 
 	public Action() {
-		super(tr("View in Indoor=..."), null, tr("View current layer in Indoor="), null, false);
+		super(tr("View in Indoor=..."), "indoorequal", tr("View current layer in Indoor="), null, false);
 	}
 
 	@Override
