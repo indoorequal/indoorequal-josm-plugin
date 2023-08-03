@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import org.openstreetmap.josm.plugins.indoorequal.HttpHandler;
 import org.openstreetmap.josm.tools.Logging;
 
 public class Server extends Thread {
