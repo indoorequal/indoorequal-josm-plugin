@@ -5,6 +5,11 @@ on:
 
 jobs:
   build:
+    permissions:
+      id-token: write
+      attestations: write
+      contents: write
+      packages: write
     strategy:
       matrix:
         josm-revision: ["", "r18303"]
