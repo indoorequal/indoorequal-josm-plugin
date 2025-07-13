@@ -2,18 +2,23 @@
 package org.openstreetmap.josm.plugins.indoorequal;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.net.Socket;
-import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.TimeZone;
 
+import org.openstreetmap.josm.gui.MainApplication;
+import org.openstreetmap.josm.gui.layer.Layer;
+import org.openstreetmap.josm.gui.layer.OsmDataLayer;
+import org.openstreetmap.josm.io.OsmWriter;
+import org.openstreetmap.josm.io.OsmWriterFactory;
 import org.openstreetmap.josm.tools.Logging;
 
 public class HttpHandler implements Runnable {
@@ -39,23 +44,16 @@ public class HttpHandler implements Runnable {
 	}
 
 	private void handleRequest() throws Exception {
-		InputStream input;
-		OutputStream output;
+		InputStream input = socket.getInputStream();
+		OutputStream output = socket.getOutputStream();
+		serverRequest(input, output);
+		output.close();
+		input.close();
 
-		File root = new File(System.getProperty("java.io.tmpdir"));
-		if (root.isDirectory()) {
-			input = socket.getInputStream();
-			output = socket.getOutputStream();
-			serverRequest(input, output, root.toString());
-			output.close();
-			input.close();
-		} else {
-			throw new Exception("www directory not present!");
-		}
 		socket.close();
 	}
 
-	private void serverRequest(InputStream input, OutputStream output, String root) throws Exception {
+	private void serverRequest(InputStream input, OutputStream output) throws Exception {
 		String line;
 		BufferedReader bf = new BufferedReader(new InputStreamReader(input));
 		while ((line = bf.readLine()) != null) {
@@ -64,9 +62,8 @@ public class HttpHandler implements Runnable {
 			}
 			if (line.startsWith("GET")) {
 				String filename = line.split(" ")[1].substring(1);
-				File resource = new File(root + File.separator + filename);
-				if (resource.isFile()) {
-					populateResponse(resource, output);
+				if (filename.equals("indoorequal.osm")) {
+					populateResponse(output);
 				} else {
 					String Content_NOT_FOUND = "<html><head></head><body><h1>File Not Found</h1></body></html>";
 
@@ -80,7 +77,8 @@ public class HttpHandler implements Runnable {
 		}
 	}
 
-	private void populateResponse(File resource, OutputStream output) throws IOException {
+	private void populateResponse(OutputStream output) throws IOException {
+		String resource = getData();
 		SimpleDateFormat format = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss z");
 		format.setTimeZone(TimeZone.getTimeZone("GMT"));
 
@@ -88,13 +86,29 @@ public class HttpHandler implements Runnable {
 		String SERVER = "Server: HTTP server/0.1\n";
 		String DATE = "Date: " + format.format(new java.util.Date()) + "\n";
 		String CORS = "Access-Control-Allow-Origin: *\n";
-		String CONTENT_TYPE = "Content-type: " + URLConnection.guessContentTypeFromName(resource.getName());
+		String CONTENT_TYPE = "Content-type: application/xml\n";
 		String LENGTH = "Content-Length: " + resource.length() + "\n\n";
 
 		String header = REQ_FOUND + SERVER + DATE + CORS + CONTENT_TYPE + LENGTH;
 		output.write(header.getBytes());
-
-		Files.copy(Paths.get(resource.toString()), output);
+		output.write(resource.getBytes());
 		output.flush();
+	}
+
+	private String getData() {
+		Layer layer = MainApplication.getLayerManager().getActiveLayer();
+        if (!(layer instanceof OsmDataLayer)) {
+            return "";
+        }
+        OsmDataLayer osmLayer = (OsmDataLayer) layer;
+        StringWriter sw = new StringWriter();
+        OsmWriter w = OsmWriterFactory.createOsmWriter(new PrintWriter(sw), false, osmLayer.data.getVersion());
+        osmLayer.data.getReadLock().lock();
+        try {
+            w.write(osmLayer.data);
+        } finally {
+            osmLayer.data.getReadLock().unlock();
+        }
+        return sw.toString();
 	}
 }
