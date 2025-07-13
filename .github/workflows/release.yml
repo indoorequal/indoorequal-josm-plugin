@@ -7,6 +7,12 @@ on:
 
 jobs:
   release:
-    uses: JOSM/JOSMPluginAction/.github/workflows/ant.yml@v1
+    permissions:
+      id-token: write
+      attestations: write
+      contents: write
+      packages: write
+    uses: JOSM/JOSMPluginAction/.github/workflows/ant.yml@v3
     with:
       plugin-jar-name: indoorequal
+      josm-revision: r18303
