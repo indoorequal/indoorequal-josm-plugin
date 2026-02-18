@@ -86,7 +86,7 @@ public class HttpHandler implements Runnable {
 		String SERVER = "Server: HTTP server/0.1\n";
 		String DATE = "Date: " + format.format(new java.util.Date()) + "\n";
 		String CORS = "Access-Control-Allow-Origin: *\n";
-		String CONTENT_TYPE = "Content-type: application/xml\n";
+		String CONTENT_TYPE = "Content-Type: application/xml\n";
 		String LENGTH = "Content-Length: " + resource.length() + "\n\n";
 
 		String header = REQ_FOUND + SERVER + DATE + CORS + CONTENT_TYPE + LENGTH;
