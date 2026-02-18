@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         josm-revision: ["", "r18303"]
-    uses: JOSM/JOSMPluginAction/.github/workflows/ant.yml@v3
+    uses: indoorequal/JOSMPluginAction/.github/workflows/ant.yml@main
     with:
       josm-revision: ${{ matrix.josm-revision }}
       plugin-jar-name: indoorequal

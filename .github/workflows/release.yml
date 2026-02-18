@@ -12,7 +12,7 @@ jobs:
       attestations: write
       contents: write
       packages: write
-    uses: JOSM/JOSMPluginAction/.github/workflows/ant.yml@v3
+    uses: indoorequal/JOSMPluginAction/.github/workflows/ant.yml@main
     with:
       plugin-jar-name: indoorequal
       josm-revision: r18303
