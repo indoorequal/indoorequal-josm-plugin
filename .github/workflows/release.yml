@@ -16,3 +16,4 @@ jobs:
     with:
       plugin-jar-name: indoorequal
       josm-revision: r18303
+      release: true
