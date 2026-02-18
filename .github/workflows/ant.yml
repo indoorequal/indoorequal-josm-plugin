@@ -17,3 +17,4 @@ jobs:
     with:
       josm-revision: ${{ matrix.josm-revision }}
       plugin-jar-name: indoorequal
+      release: false
